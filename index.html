@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StarCompany</title>
+  <link rel="stylesheet" href="./styles/style.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="container">
+        <div class="header__container">
+          <div class="logo">
+            <a href="#" class="logo__link">
+              <img src="./img/logo.png" alt="StarCompany" class="logo__img">
+            </a>
+          </div>
+          <div class="login">
+            <button type="button" class="login__btn">Log in</button>
+            <form class="login__form">
+              <div class="login__form-item">
+                <div class="field">
+                  <input type="email" class="field__input" placeholder="Email">
+                  <div class="error">Please enter a valid email address</div>
+                </div>
+              </div>
+              <div class="login__form-item">
+                <div class="field">
+                  <input type="password" class="field__input" placeholder="Password">
+                </div>
+                <a href="#" class="field__link">Forgot your password?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <div class="container">
+        <h1 class="title">StarCompany Designs, manufactures and <span>Launches Advanced Rockets and Spacecrafts</span>
+        </h1>
+        <div class="signin">
+          <div class="signin__content">
+            <div class="step__btns">
+              <button class="step__btn step__btn--prev">
+                <span class="step__btn-icon"></span>
+              </button>
+              <button class="step__btn step__btn--next">
+                <span class="step__btn-text">Next step</span>
+                <span class="step__btn-icon"></span>
+              </button>
+            </div>
+            <form class="step__form">
+              <div class="step__content">
+                <ul class="steps">
+                  <li class="step">
+                    <span class="step__caption">Who are you?</span>
+                    <div class="step__field">
+                      <select name="profession" data-step-field class="step__select">
+                        <option value="" disabled selected>Select</option>
+                        <option value="engineer">Engineer</option>
+                        <option value="designer">Designer</option>
+                        <option value="product manager">Product Manager</option>
+                      </select>
+
+                    </div>
+                  </li>
+                  <li class="step">
+                    <span class="step__caption">What is your age?</span>
+                    <div class="step__field">
+                      <select name="age" data-step-field class="step__select">
+                        <option value="" disabled selected>Select</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                      </select>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <span class="step__caption">I am from</span>
+                    <div class="step__field">
+                      <input placeholder="Input your address" data-step-field type="text" name="address"
+                        class="step__input">
+                    </div>
+                    <div class="step__description">
+                      E.g.: New Roads or 70760
+                      <br>
+                      We don’t use postal addresses to contact members directly!
+                    </div>
+                  </li>
+                  <li class="step">
+                    <span class="step__caption">Your email address</span>
+                    <div class="step__field">
+                      <input type="text" data-step-field name="email" placeholder="Input your email"
+                        class="step__input">
+                    </div>
+                  </li>
+                  <li class="step">
+                    <span class="step__caption">Create your password</span>
+                    <div class="step__field">
+                      <input type="password" data-step-field name="password" placeholder="Input your password"
+                        class="step__input">
+                    </div>
+                    <div class="step__description">
+                      By clicking the button above you agree to our <a href="#">Terms of Use</a> <br> and <a
+                        href="#">Privacy
+                        Policy</a> including use of cookies and to receive newsletters, account updates and offers
+                      sent by StarCompany.
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </form>
+            <div class="step__progress"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+<script src="js/main.js"></script>
+
+</html>

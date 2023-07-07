@@ -1,0 +1,33 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/open-sans-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/open-sans-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Proxima Nova';
+  src: url('../fonts/proxima_nova_light.woff2') format('woff2'),
+    url('../fonts/proxima_nova_light.woff') format('woff');
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Proxima Nova';
+  src: url('../fonts/proxima_nova_bold.woff2') format('woff2'),
+    url('../fonts/proxima_nova_bold.woff') format('woff');
+  font-style: normal;
+  font-weight: 700;
+}
