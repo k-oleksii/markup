@@ -534,7 +534,7 @@ ul {
   opacity: 1;
 }
 
-.step__progress {
+.progress {
   position: absolute;
   top: calc(100% + 90px);
   right: 0;
@@ -545,7 +545,7 @@ ul {
   gap: 5px 15px;
 }
 
-.step__progress-item {
+.progress-item {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -553,7 +553,7 @@ ul {
   transition: background-color 0.2s;
 }
 
-.step__progress-item--completed {
+.progress-item--completed {
   background-color: #fff;
 }
 
@@ -596,7 +596,7 @@ ul {
     transform: translateX(0);
   }
 
-  .step__progress {
+  .progress {
     top: calc(100% + 140px);
   }
 }

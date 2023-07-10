@@ -2,7 +2,7 @@ const url = 'http://www.mocky.io/v2/5dfcef48310000ee0ed2c281'; // API
 
 const getSelector = selector => document.querySelector(selector);
 
-let isLoginFormShow = false; // state
+let isLoginFormShow = false; // state for login form
 
 const validateFieldEmail = email => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
@@ -53,6 +53,7 @@ const validateLoginForm = () => {
   return isValidateFieldEmail && passFieldValue !== '';
 };
 
+// Submit Login Form
 const submitLoginForm = () => {
   const isValidForm = validateLoginForm();
 
@@ -82,10 +83,10 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
-// Regform
+// RegForm
 
 const fields = document.querySelectorAll('[data-step-field]');
-const stepItemElements = document.querySelectorAll('.step');
+const stepItems = document.querySelectorAll('.step');
 const stepBtnNext = getSelector('.step__btn--next');
 const stepBtnBack = getSelector('.step__btn--prev');
 
@@ -143,41 +144,15 @@ const customSelect = element => {
   select.appendChild(selectList);
 };
 
-const initializeCustomSelects = () => {
+// End Custom Select
+
+const initializeSelects = () => {
   const selectElements = document.querySelectorAll('.step__select');
 
   selectElements.forEach(item => {
     customSelect(item);
   });
 };
-
-const validationData = [
-  {
-    step: 0,
-    element: fields[0],
-    errorMessage: 'Please select a profession',
-  },
-  {
-    step: 1,
-    element: fields[1],
-    errorMessage: 'Please select an age',
-  },
-  {
-    step: 2,
-    element: fields[2],
-    errorMessage: 'Please enter your address',
-  },
-  {
-    step: 3,
-    element: fields[3],
-    errorMessage: 'Please enter your email',
-  },
-  {
-    step: 4,
-    element: fields[4],
-    errorMessage: 'Please enter your password',
-  },
-];
 
 let currentStep = 0;
 
@@ -190,107 +165,128 @@ const error = (element, error) => {
   element.appendChild(errorBlock);
 };
 
+const validationData = [
+  {
+    step: 0,
+    element: fields[0],
+    errorMessage: 'Please select your profession',
+  },
+  {
+    step: 1,
+    element: fields[1],
+    errorMessage: 'Please select your age',
+  },
+  {
+    step: 2,
+    element: fields[2],
+    errorMessage: 'Enter your postal code to find local matches',
+  },
+  {
+    step: 3,
+    element: fields[3],
+    errorMessage: 'Please enter a valid email address',
+  },
+  {
+    step: 4,
+    element: fields[4],
+    errorMessage: 'Please enter a password to secure your account',
+  },
+];
+
 const validateStep = () => {
+  let isValid = false;
   const { element, errorMessage } = validationData[currentStep];
   const value = element.value;
+  const stepItemElement = stepItems[currentStep];
+
+  const errorBlock = getSelector('.error');
+  if (errorBlock) {
+    stepItemElement.classList.remove('step--error');
+    errorBlock.remove();
+  }
 
   switch (currentStep) {
     case 0:
     case 1:
     case 2:
       if (!validateFieldEmpty(value)) {
-        error(stepItemElements[currentStep], errorMessage);
-        return false;
+        error(stepItems[currentStep], errorMessage);
+      } else {
+        isValid = true;
       }
       break;
     case 3:
       if (!validateFieldEmpty(value) || !validateFieldEmail(value)) {
-        error(stepItemElements[currentStep], errorMessage);
-        return false;
+        error(stepItems[currentStep], errorMessage);
+      } else {
+        isValid = true;
       }
       break;
     case 4:
       if (!validateFieldEmpty(value) || !validateFieldPassword(value)) {
-        error(stepItemElements[currentStep], errorMessage);
-        return false;
+        error(stepItems[currentStep], errorMessage);
+      } else {
+        isValid = true;
       }
       break;
     default:
       break;
   }
 
-  return true;
+  return isValid;
 };
 
-const initializeProgressIndicator = () => {
-  const progress = getSelector('.step__progress');
-
-  for (let i = 0; i < stepItemElements.length; i++) {
-    const progressItem = document.createElement('span');
-    progressItem.classList.add('step__progress-item');
-    progress.appendChild(progressItem);
-  }
-
-  stepItemElements[0].classList.add('step--active');
-};
-
-const handleNextButtonClick = () => {
-  const progressItems = document.querySelectorAll('.step__progress-item');
+const handleNextButton = () => {
+  const progressItems = document.querySelectorAll('.progress-item');
 
   if (validateStep()) {
-    stepItemElements.forEach(item => {
+    stepItems.forEach(item => {
       item.classList.remove('step--active');
     });
 
-    if (currentStep < stepItemElements.length - 1) {
-      stepItemElements[currentStep].classList.add('step--completed');
-      progressItems[currentStep].classList.add(
-        'step__progress-item--completed'
-      );
-      stepItemElements[currentStep].classList.remove('step--error');
+    if (currentStep < stepItems.length - 1) {
+      stepItems[currentStep].classList.add('step--completed');
+      progressItems[currentStep].classList.add('progress-item--completed');
+      stepItems[currentStep].classList.remove('step--error');
       currentStep++;
-      stepItemElements[currentStep].classList.add('step--active');
-    } else if (currentStep === stepItemElements.length - 1) {
-      stepItemElements[currentStep].classList.add('step--active');
-      progressItems[currentStep].classList.add(
-        'step__progress-item--completed'
-      );
-      // Sending a request to the server
-      sendRequest()
-        .then(() => {
-          // Request sent successfully
-
-          stepBtnNext.querySelector('.step__btn-text').textContent =
-            'Start now';
-          stepBtnNext.classList.add('step__btn--success');
-        })
-        .catch(() => {
-          // Error sending request
-          console.log('Error Sending Request');
-        });
+      stepItems[currentStep].classList.add('step--active');
+    } else if (currentStep === stepItems.length - 1) {
+      stepItems[currentStep].classList.add('step--active');
+      progressItems[currentStep].classList.add('progress-item--completed');
+      stepBtnNext.querySelector('.step__btn-text').textContent = 'Start now';
+      stepBtnNext.classList.add('step__btn--success');
     }
+
+    // Sending a request to the server
+    sendRequest()
+      .then(() => {
+        // Request sent successfully
+        console.log('Request sent successfully');
+      })
+      .catch(() => {
+        // Error sending request
+        console.log('Error Sending Request');
+      });
   }
 };
 
-const handleBackButtonClick = () => {
-  const progressItems = document.querySelectorAll('.step__progress-item');
+const handlePrevButton = () => {
+  const progressItems = document.querySelectorAll('.progress-item');
 
   if (currentStep > 0) {
-    stepItemElements[currentStep].classList.remove('step--active');
+    stepItems[currentStep].classList.remove('step--active');
     currentStep--;
-    stepItemElements[currentStep].classList.add('step--active');
-    progressItems[currentStep].classList.remove(
-      'step__progress-item--completed'
-    );
+    stepItems[currentStep].classList.add('step--active');
+    progressItems[currentStep].classList.remove('progress-item--completed');
 
     stepBtnNext.querySelector('.step__btn-text').textContent = 'Next step';
     stepBtnNext.classList.remove('step__btn--success');
   }
 };
 
-const initializeEventListeners = () => {
-  stepBtnNext.addEventListener('click', handleNextButtonClick);
-  stepBtnBack.addEventListener('click', handleBackButtonClick);
+const initializeStepButtons = () => {
+  stepBtnNext.addEventListener('click', handleNextButton);
+  stepBtnBack.addEventListener('click', handlePrevButton);
 };
 
 const sendRequest = () => {
@@ -317,10 +313,26 @@ const sendRequest = () => {
   });
 };
 
+// Progress Indicators
+
+const progressIndicators = () => {
+  const progress = getSelector('.progress');
+
+  for (let i = 0; i < stepItems.length; i++) {
+    const progressItem = document.createElement('span');
+    progressItem.classList.add('progress-item');
+    progress.appendChild(progressItem);
+  }
+
+  stepItems[0].classList.add('step--active');
+};
+
+// Initialize RegForm
+
 const initializeForm = () => {
-  initializeCustomSelects();
-  initializeProgressIndicator();
-  initializeEventListeners();
+  initializeSelects();
+  progressIndicators();
+  initializeStepButtons();
 };
 
 // Call the initialization function
